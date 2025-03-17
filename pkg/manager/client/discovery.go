@@ -86,6 +86,9 @@ func (dc *DiscoveryClient) SpecificResourcesForNamespace(toObj ParseResult, modu
 			url := fmt.Sprintf("/%s/%s/namespaces/%s/%s", prefix, gv.String(), namespace, resource.Name)
 
 			result := dc.discoveryClient.RESTClient().Get().AbsPath(url).Do(dc.Context)
+			if namespace == "fleet-local" {
+				logrus.Infof("Get name: %s, result: %v", resource.Name, result)
+			}
 
 			// It is likely that errors can occur.
 			if result.Error() != nil {
